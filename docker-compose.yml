@@ -1,0 +1,38 @@
+version: "3"
+services:
+  mariadb:
+    container_name: tenda-track-db
+    image: mariadb:10.4.6
+    restart: always
+    env_file: .env
+       ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - ./var/db:/var/lib/mysql
+      - ./backup:/docker-entrypoint-initdb.d
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: tenda-track-phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - 7070:80
+    depends_on:
+      - mariadb
+#  web:
+#    container_name:castel-selector-backend
+#    restart: always
+#    build: .
+#    ports:
+#      - ${PORT}:${PORT}
+#    links:
+#      - mariadb:mariadb
+#    volumes:
+#      - ./:/app
+#      - /app/node_modules
+#    env_file: .env
+#    entrypoint: npm run-script start

@@ -1,0 +1,176 @@
+{
+  "info": {
+    "_postman_id": "281a8019-fe17-4665-9620-e889d4615a3e",
+    "name": "tendatrack",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authHeaderValue\", \"Bearer \"+ jsonData.token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"INSERT-USERNAME-HERE\",\n    \"password\": \"INSERT-PASSWORD-HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/utente/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["utente", "login"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "commessa",
+      "item": [
+        {
+          "name": "get one commessa",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "{{authHeaderValue}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/commessa/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["commessa", "1"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "preventivo",
+      "item": [
+        {
+          "name": "get one preventivo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "type": "text",
+                "value": "{{authHeaderValue}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/preventivo/17",
+              "host": ["{{baseUrl}}"],
+              "path": ["preventivo", "17"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "media",
+      "item": [
+        {
+          "name": "create media",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{authHeaderValue}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "data",
+                  "value": "{\"preventivo_id\": 17}",
+                  "type": "text"
+                },
+                {
+                  "key": "files",
+                  "type": "file",
+                  "src": [
+                    "/home/walterthiele/Pictures/Immagini/Varie/im_root_sysadmin.jpg",
+                    "/home/walterthiele/Pictures/Immagini/Varie/my-name-is-mr-wolf-i-solve-problems.jpg"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/media",
+              "host": ["{{baseUrl}}"],
+              "path": ["media"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete media",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{authHeaderValue}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/media/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["media", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "download media file",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{authHeaderValue}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/file/download/4",
+              "host": ["{{baseUrl}}"],
+              "path": ["file", "download", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
